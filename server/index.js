@@ -21,13 +21,17 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/market', marketRoutes);
 
 // Serve Frontend (production)
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // SPA Fallback - serve index.html for all non-API routes
 app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, 'client/dist/index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
