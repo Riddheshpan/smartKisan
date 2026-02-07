@@ -1,43 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { CloudSun, CloudRain, Wind, Droplets, Sun, AlertTriangle, Thermometer, Snowflake, Cloud, MapPin, Loader2 } from 'lucide-react';
+import { CloudSun, CloudRain, Wind, Droplets, Sun, AlertTriangle, Snowflake, Cloud, MapPin, Loader2 } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { weatherService } from '@/lib/weather';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { api } from '@/lib/api';
 
-// Icon Map
 const iconMap = {
-    Sun: Sun,
-    CloudSun: CloudSun,
-    Cloud: Cloud,
-    CloudFog: Cloud, // Fallback to Cloud
-    CloudDrizzle: CloudRain, // Fallback to CloudRain
-    CloudRain: CloudRain,
-    Snowflake: Snowflake,
-    CloudLightning: CloudRain, // Fallback to CloudRain
+    Sun, CloudSun, Cloud, CloudRain, Snowflake,
+    CloudFog: Cloud, CloudDrizzle: CloudRain, CloudLightning: CloudRain,
 };
 
 const Weather = () => {
     const { t } = useLanguage();
+    const { user } = useAuth();
     const [weather, setWeather] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedDay, setSelectedDay] = useState(null);
+    const [locationName, setLocationName] = useState('');
 
     useEffect(() => {
         const fetchWeather = async () => {
             setLoading(true);
-            const data = await weatherService.getWeather(); // Defaults to Karnal
-            setWeather(data);
-            if (data && data.daily.length > 0) {
-                setSelectedDay(data.daily[0].day);
+            let location = 'New Delhi'; // default
+
+            // Get user's location from profile
+            if (user) {
+                const { data } = await api.getProfile(user.id);
+                if (data?.location) {
+                    location = data.location;
+                }
+            }
+
+            try {
+                const res = await fetch(`/api/weather?location=${encodeURIComponent(location)}`);
+                const data = await res.json();
+                setWeather(data);
+                setLocationName(data.location?.name || location);
+                if (data?.daily?.length > 0) {
+                    setSelectedDay(data.daily[0].day);
+                }
+            } catch (e) {
+                console.error('Weather fetch error:', e);
             }
             setLoading(false);
         };
         fetchWeather();
-    }, []);
+    }, [user]);
 
     if (loading) {
         return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
@@ -53,8 +65,8 @@ const Weather = () => {
     return (
         <div className="p-6 max-w-7xl mx-auto">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{t('weather_forecast_title')}</h1>
-                <p className="text-gray-500 dark:text-gray-400">{t('weather_subtitle')}</p>
+                <h1 className="text-3xl font-bold">{t('weather_forecast_title')}</h1>
+                <p className="text-muted-foreground">{t('weather_subtitle')}</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -68,7 +80,7 @@ const Weather = () => {
                                 <p className="text-xl font-medium mt-1 text-blue-100">{weather.current.desc}</p>
                                 <div className="flex items-center justify-center md:justify-start gap-2 mt-4 text-sm font-medium bg-white/20 w-fit px-3 py-1 rounded-full mx-auto md:mx-0">
                                     <MapPin className="w-4 h-4" />
-                                    <span>Karnal, Haryana</span>
+                                    <span>{locationName}</span>
                                 </div>
                             </div>
                             <CurrentIcon className="w-40 h-40 text-yellow-300 drop-shadow-lg" />
@@ -94,134 +106,86 @@ const Weather = () => {
                     </CardContent>
                 </Card>
 
-                {/* Right Side - Alerts & Advisories */}
+                {/* Alerts */}
                 <div className="space-y-6">
-                    <Card className="border-l-4 border-l-yellow-500 bg-card">
+                    <Card className="border-l-4 border-l-yellow-500">
                         <CardHeader className="pb-2">
-                            <CardTitle className="flex items-center gap-2 text-yellow-600 text-lg">
+                            <CardTitle className="flex items-center gap-2 text-yellow-600">
                                 <AlertTriangle className="w-5 h-5" /> {t('weather_alert')}
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="font-medium text-gray-800 dark:text-gray-200">
-                                {weather.current.temp > 35 ? "Heatwave conditions possible." : "No severe alerts currently."}
-                            </p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                {weather.current.temp > 35
-                                    ? "Maintain adequate irrigation for crops."
-                                    : "Conditions are favorable for field operations."}
-                            </p>
+                            <p className="text-sm text-muted-foreground">{t('weather_alert_description')}</p>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-lg">{t('farm_advisory')}</CardTitle>
+                            <CardTitle>{t('farming_advisory')}</CardTitle>
                         </CardHeader>
-                        <CardContent className="space-y-3">
-                            <div className="flex gap-3 items-start">
-                                <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
-                                    <Thermometer className="w-4 h-4 text-green-700 dark:text-green-400" />
-                                </div>
-                                <div>
-                                    <p className="font-medium text-sm text-gray-900 dark:text-gray-200">{t('current_conditions')}</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                        Temp: {weather.current.temp}°C, {t('humidity')}: {weather.current.humidity}%.
-                                        Appropriate for {weather.current.precip > 0 ? "indoor activities" : "spraying and harvesting"}.
-                                    </p>
-                                </div>
-                            </div>
+                        <CardContent className="space-y-2">
+                            <p className="text-sm">• {t('advisory_irrigation')}</p>
+                            <p className="text-sm">• {t('advisory_harvest')}</p>
+                            <p className="text-sm">• {t('advisory_pest')}</p>
                         </CardContent>
                     </Card>
                 </div>
             </div>
 
-            <Separator className="my-8" />
-
-            {/* 7 Day Forecast */}
-            <Tabs defaultValue="forecast" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
-                    <TabsTrigger value="forecast">{t('seven_day_forecast')}</TabsTrigger>
-                    <TabsTrigger value="details">{t('detailed_analytics')}</TabsTrigger>
-                </TabsList>
-                <TabsContent value="forecast" className="mt-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4">
-                        {weather.daily.map((day, i) => {
+            {/* Weekly Forecast */}
+            <Card className="mt-8">
+                <CardHeader>
+                    <CardTitle>{t('weekly_forecast')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-7 gap-2">
+                        {weather.daily.map((day) => {
                             const DayIcon = iconMap[day.icon] || Cloud;
                             return (
-                                <Card key={i} className={`text-center transition-all ${i === 0 ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : ''}`}>
-                                    <CardContent className="p-4 flex flex-col items-center justify-between h-full gap-4">
-                                        <p className="font-medium text-gray-600 dark:text-gray-300">{i === 0 ? t('today') : day.day}</p>
-                                        <DayIcon className={cn("w-8 h-8", {
-                                            "text-yellow-500": day.icon.includes("Sun"),
-                                            "text-gray-500": day.icon.includes("Cloud"),
-                                            "text-blue-500": day.icon.includes("Rain")
-                                        })} />
-                                        <div>
-                                            <p className="font-bold text-gray-900 dark:text-white text-lg">{day.maxTemp}° <span className="text-gray-400 text-sm">{day.minTemp}°</span></p>
-                                            <p className="text-xs text-gray-400 truncate w-full">{day.desc}</p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                <div
+                                    key={day.day}
+                                    onClick={() => setSelectedDay(day.day)}
+                                    className={cn(
+                                        "p-4 rounded-xl text-center cursor-pointer transition-all",
+                                        selectedDay === day.day ? "bg-blue-100 dark:bg-blue-900/30 ring-2 ring-blue-500" : "hover:bg-muted"
+                                    )}
+                                >
+                                    <p className="font-medium text-sm">{day.day}</p>
+                                    <DayIcon className="w-8 h-8 mx-auto my-2 text-blue-500" />
+                                    <p className="font-bold">{day.maxTemp}°</p>
+                                    <p className="text-sm text-muted-foreground">{day.minTemp}°</p>
+                                    <p className="text-xs text-blue-500 mt-1">{day.rainChance}%</p>
+                                </div>
                             );
                         })}
                     </div>
-                </TabsContent>
-                <TabsContent value="details" className="space-y-6">
-                    {/* Day Selection for Analytics */}
-                    <div className="flex gap-2 overflow-x-auto pb-2">
-                        {weather.daily.map((day, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setSelectedDay(day.day)}
-                                className={cn(
-                                    "px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap",
-                                    selectedDay === day.day
-                                        ? "bg-primary text-primary-foreground"
-                                        : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                                )}
-                            >
-                                {i === 0 ? t('today') : day.day}
-                            </button>
-                        ))}
-                    </div>
+                </CardContent>
+            </Card>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>{t('hourly_temperature')} - {selectedDay === weather.daily[0].day ? t('today') : selectedDay}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="h-[400px]">
-                            <div className="w-full h-full">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={hourlyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                                        <defs>
-                                            <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8} />
-                                                <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
-                                            </linearGradient>
-                                        </defs>
-                                        <XAxis dataKey="time" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} />
-                                        <YAxis unit="°C" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}°`} />
-                                        <Tooltip
-                                            contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
-                                            itemStyle={{ color: 'hsl(var(--foreground))' }}
-                                            labelStyle={{ color: 'hsl(var(--muted-foreground))' }}
-                                        />
-                                        <Area
-                                            type="monotone"
-                                            dataKey="temp"
-                                            stroke="#16a34a"
-                                            fillOpacity={1}
-                                            fill="url(#colorTemp)"
-                                            name="Temperature"
-                                        />
-                                    </AreaChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-            </Tabs>
+            {/* Hourly Chart */}
+            <Card className="mt-8">
+                <CardHeader>
+                    <CardTitle>{t('hourly_temperature')} - {selectedDay}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={hourlyData}>
+                                <defs>
+                                    <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <XAxis dataKey="time" tick={{ fontSize: 12 }} />
+                                <YAxis tick={{ fontSize: 12 }} domain={['dataMin - 2', 'dataMax + 2']} />
+                                <Tooltip />
+                                <Area type="monotone" dataKey="temp" stroke="#3b82f6" fill="url(#tempGradient)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 };
