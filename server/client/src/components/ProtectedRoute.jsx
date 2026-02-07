@@ -34,11 +34,7 @@ export const ProtectedRoute = ({ children, requireCompleteProfile = true }) => {
         return <Navigate to="/auth" state={{ from: location }} replace />;
     }
 
-    // If profile is incomplete and we're not on onboarding, redirect there
-    const isIncomplete = !profile?.full_name || !profile?.location;
-    if (requireCompleteProfile && isIncomplete && location.pathname !== '/onboarding') {
-        return <Navigate to="/onboarding" replace />;
-    }
+
 
     return children;
 };

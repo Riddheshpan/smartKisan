@@ -6,7 +6,6 @@ import { Layout } from './components/Layout';
 // Pages
 import Dashboard from './pages/Dashboard';
 import Auth from './pages/Auth';
-import Onboarding from './pages/Onboarding';
 import Weather from './pages/Weather';
 import CropHealth from './pages/CropHealth';
 import Market from './pages/Market';
@@ -41,13 +40,6 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
-
-      {/* Onboarding - Separate layout? For now keep it invalid or same. 
-          Actually Onboarding usually doesn't have the full sidebar. 
-          Let's keep it separate as before or wrap it differently.
-      */}
-      <Route path="/onboarding" element={<ProtectedRoute requireCompleteProfile={false}><Onboarding /></ProtectedRoute>} />
-
 
       {/* Catch-all */}
       <Route path="*" element={<NotFound />} />

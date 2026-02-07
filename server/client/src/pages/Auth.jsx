@@ -29,7 +29,7 @@ const Auth = () => {
             if (action === 'login') {
                 navigate('/');
             } else {
-                alert('Sign up successful! Please check your email for verification.');
+                window.location.href = '/';
             }
         } catch (error) {
             alert(error.message);
