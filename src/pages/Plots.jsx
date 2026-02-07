@@ -1,0 +1,200 @@
+import React, { useState, useEffect } from 'react';
+import { Plus, MapPin, Sprout, Ruler, Loader2 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { api } from '@/lib/api';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const Plots = () => {
+    const { t } = useLanguage();
+    const { user } = useAuth();
+    const [plots, setPlots] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    const [newPlot, setNewPlot] = useState({ name: "", crop: "", area: "" });
+
+    useEffect(() => {
+        if (user) {
+            loadPlots();
+        }
+    }, [user]);
+
+    const loadPlots = async () => {
+        setLoading(true);
+        const { data, error } = await api.getPlots(user.id);
+        if (data) {
+            setPlots(data);
+        }
+        setLoading(false);
+    };
+
+    const handleAddPlot = async (e) => {
+        e.preventDefault();
+        if (!newPlot.name || !newPlot.crop || !newPlot.area) return;
+
+        setSaving(true);
+        const plotData = {
+            user_id: user.id,
+            name: newPlot.name,
+            crop: newPlot.crop,
+            area: parseFloat(newPlot.area),
+            status: 'Preparation', // Default status
+        };
+
+        const { data, error } = await api.createPlot(plotData);
+
+        if (error) {
+            alert('Failed to add plot: ' + error.message);
+        } else {
+            // Optimistic update or reload
+            loadPlots();
+            setNewPlot({ name: "", crop: "", area: "" });
+            setIsDialogOpen(false);
+        }
+        setSaving(false);
+    };
+
+    if (loading && plots.length === 0) {
+        return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
+    }
+
+    return (
+        <div className="p-6 max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-8">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900">{t('my_plots_title')}</h1>
+                    <p className="text-gray-500">{t('manage_plots')}</p>
+                </div>
+
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                        <Button className="bg-green-600 hover:bg-green-700">
+                            <Plus className="mr-2 h-4 w-4" /> {t('add_new_plot')}
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>{t('add_plot_dialog')}</DialogTitle>
+                            <DialogDescription>
+                                {t('enter_details')}
+                            </DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={handleAddPlot} className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">
+                                    {t('name')}
+                                </Label>
+                                <Input
+                                    id="name"
+                                    value={newPlot.name}
+                                    onChange={(e) => setNewPlot({ ...newPlot, name: e.target.value })}
+                                    className="col-span-3"
+                                    placeholder="e.g. North Field"
+                                    required
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="crop" className="text-right">
+                                    {t('crop')}
+                                </Label>
+                                <Input
+                                    id="crop"
+                                    value={newPlot.crop}
+                                    onChange={(e) => setNewPlot({ ...newPlot, crop: e.target.value })}
+                                    className="col-span-3"
+                                    placeholder="e.g. Wheat"
+                                    required
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="area" className="text-right">
+                                    {t('area')}
+                                </Label>
+                                <Input
+                                    id="area"
+                                    type="number"
+                                    step="0.1"
+                                    value={newPlot.area}
+                                    onChange={(e) => setNewPlot({ ...newPlot, area: e.target.value })}
+                                    className="col-span-3"
+                                    placeholder="in Acres"
+                                    required
+                                />
+                            </div>
+                            <DialogFooter>
+                                <Button type="submit" disabled={saving}>
+                                    {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                    {t('save_plot_btn')}
+                                </Button>
+                            </DialogFooter>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+            </div>
+
+            {plots.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                    <Sprout className="mx-auto h-12 w-12 text-gray-300 mb-4" />
+                    <p>No plots found. Add your first plot to get started!</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {plots.map((plot) => (
+                        <Card key={plot.id} className="hover:shadow-md transition-shadow">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-lg font-bold">{plot.name}</CardTitle>
+                                <span className={cn(
+                                    "px-2 py-1 rounded-full text-xs font-medium",
+                                    plot.status === "Active" ? "bg-green-100 text-green-700" :
+                                        plot.status === "Harvest Ready" ? "bg-yellow-100 text-yellow-700" :
+                                            "bg-gray-100 text-gray-700"
+                                )}>
+                                    {plot.status}
+                                </span>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3 mt-4">
+                                    <div className="flex items-center text-sm text-gray-500">
+                                        <Sprout className="mr-2 h-4 w-4 text-green-600" />
+                                        Crop: <span className="font-medium text-gray-900 ml-1">{plot.crop}</span>
+                                    </div>
+                                    <div className="flex items-center text-sm text-gray-500">
+                                        <Ruler className="mr-2 h-4 w-4 text-blue-600" />
+                                        Area: <span className="font-medium text-gray-900 ml-1">{plot.area} Acres</span>
+                                    </div>
+                                    {/* Placeholder for location or other details */}
+                                    <div className="flex items-center text-sm text-gray-500">
+                                        <MapPin className="mr-2 h-4 w-4 text-red-500" />
+                                        Location: <span className="text-gray-400 ml-1">View on Map</span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 flex gap-2">
+                                    <Button variant="outline" size="sm" className="w-full">Edit</Button>
+                                    <Button variant="outline" size="sm" className="w-full">Details</Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Plots;

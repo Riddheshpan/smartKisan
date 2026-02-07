@@ -1,0 +1,808 @@
+export const translations = {
+    en: {
+        // Sidebar
+        app_name: "Smart Kissan",
+        dashboard: "Dashboard",
+        weather: "Weather",
+        crop_health: "Crop Health",
+        market: "Market",
+        my_plots: "My Plots",
+        expert_chat: "Expert Chat",
+        schemes: "Schemes",
+        profile: "Profile",
+        settings: "Settings",
+        logout: "Logout",
+
+        // Dashboard
+        welcome_back: "Welcome back, Kissan!",
+        farm_happening: "Here's what's happening on your farm today.",
+        add_plot: "Add Plot",
+        current_weather: "Current Weather",
+        humidity: "Humidity",
+        wind: "Wind",
+        farm_overview: "Farm Overview",
+        active_plots: "Active Plots",
+        pending_tasks: "Pending Tasks",
+        market_updates: "Market Updates",
+        recommended_actions: "Recommended Actions",
+        local_mandi_prices: "Local Mandi Prices",
+        view_market_report: "View Full Market Report",
+
+        // Weather
+        weather_forecast_title: "Weather Forecast",
+        weather_subtitle: "Real-time weather updates and farming advisories.",
+        today: "Today",
+        precipitation: "Precipitation",
+        weather_alert: "Weather Alert",
+        farm_advisory: "Farm Advisory",
+        current_conditions: "Current Conditions",
+        seven_day_forecast: "7-Day Forecast",
+        detailed_analytics: "Detailed Analytics",
+        hourly_temperature: "Hourly Temperature",
+
+        // Crop Health
+        crop_health_title: "Crop Health Doctor",
+        upload_photo: "Upload a photo to detect diseases using AI.",
+        upload_instruction: "Drag & drop or Click to Upload",
+        diagnosis_report: "Diagnosis Report",
+        analyzing: "Analyzing leaf patterns...",
+        confidence_score: "Confidence Score",
+        recommended_care: "Recommended Care",
+        healthy: "Healthy",
+        disease: "Disease",
+        pest: "Pest",
+        upload_card_title: "Upload Photo",
+
+        // Marketplace
+        smart_mandi_live: "Smart Mandi Live",
+        real_time_prices: "Real-time agricultural commodity prices across India.",
+        top_gainer: "Top Gainer",
+        top_loser: "Top Loser",
+        high_demand: "High Demand",
+        market_prices: "Market Prices",
+        commodity: "Commodity",
+        state: "State",
+        market_center: "Market Center",
+        min_price: "Min Price",
+        max_price: "Max Price",
+        modal_price: "Modal Price",
+        trend: "Trend",
+        search_market: "Search market or crop...",
+        no_data_found: "No market data found for your filters.",
+
+        // My Plots
+        my_plots_title: "My Plots",
+        manage_plots: "Manage and monitor your agricultural plots.",
+        add_new_plot: "Add New Plot",
+        enter_details: "Enter the details of your new land plot here.",
+        name: "Name",
+        crop: "Crop",
+        area: "Area (Acres)",
+        save_plot: "Save Plot",
+        no_plots: "No plots found. Add your first plot to get started!",
+        status: "Status",
+        location: "Location",
+        view_map: "View on Map",
+
+        // Expert Chat
+        kisan_sahayak: "Kisan Sahayak",
+        ai_expert: "AI Agricultural Expert",
+        ask_ai: "Ask AI anything about farming...",
+        ai_active: "AI Active",
+        add_ai_key: "Add AI Key",
+
+        // Schemes
+        govt_schemes: "Government Schemes",
+        schemes_subtitle: "Real-time information on subsidies, loans, and insurance.",
+        search_schemes: "Search for schemes...",
+        view_portal: "View Official Portal",
+        deadline: "Deadline",
+        category: "Category",
+
+        // Profile
+        my_profile: "My Profile",
+        manage_info: "Manage your personal information and farm details.",
+        edit_profile: "Edit Profile",
+        full_name: "Full Name",
+        email: "Email",
+        farm_name: "Farm Name",
+        farming_type: "Primary Farming Type",
+        save_changes: "Save Changes",
+        land_size: "Total Land Size",
+
+        // Settings
+        app_settings: "Settings",
+        preferences: "Preferences",
+        appearance: "Appearance",
+        notifications: "Notifications",
+        privacy: "Privacy & Security",
+        sign_out: "Sign Out",
+        light: "Light",
+        dark: "Dark",
+        system: "System",
+
+        // Auth
+        login_title: "Login",
+        login_tab: "Login",
+        signup_tab: "Sign Up",
+        login_welcome: "Welcome back! Please access your account.",
+        email_placeholder: "Enter your email",
+        password_placeholder: "Enter your password",
+        password_create_placeholder: "Choose a password",
+        terms_agree: "By continuing, you agree to our Terms of Service and Privacy Policy.",
+
+        // Common
+        loading: "Loading...",
+        save: "Save",
+        cancel: "Cancel",
+        edit: "Edit",
+        delete: "Delete",
+        search_placeholder: "Search...",
+        view_details: "View Details",
+        go_home: "Go Home",
+        page_not_found: "Page Not Found",
+
+        // Schemes
+        min_agriculture: "Min. of Agriculture",
+        clear_filters: "Clear Filters",
+        no_schemes_match: "No schemes found matching",
+        req_docs: "Req: Aadhar, Land Record, Bank Passbook",
+
+        // Expert Chat
+        ai_connection_fail: "⚠️ AI Connection failed. Falling back to basic mode.",
+        type_message: "Type your message...",
+
+        // Plots
+        add_plot_dialog: "Add New Plot",
+        save_plot_btn: "Save Plot",
+        plot_saved: "Plot saved successfully!",
+
+        // Profile
+        location_village: "Location / Village",
+        profile_updated: "Profile updated successfully!"
+    },
+    hi: {
+        app_name: "स्मार्ट किसान",
+        dashboard: "डैशबोर्ड",
+        weather: "मौसम",
+        crop_health: "फसल स्वास्थ्य",
+        market: "बाज़ार",
+        my_plots: "मेरे खेत",
+        expert_chat: "विशेषज्ञ चैट",
+        schemes: "योजनाएं",
+        profile: "प्रोफ़ाइल",
+        settings: "सेटिंग्स",
+        logout: "लॉग आउट",
+
+        welcome_back: "वापसी पर स्वागत है, किसान!",
+        farm_happening: "आज आपके खेत में क्या हो रहा है।",
+        add_plot: "खेत जोड़ें",
+        current_weather: "वर्तमान मौसम",
+        humidity: "नमी",
+        wind: "हवा",
+        farm_overview: "खेत का अवलोकन",
+        active_plots: "सक्रिय खेत",
+        pending_tasks: "लंबित कार्य",
+        market_updates: "बाज़ार अपडेट",
+        recommended_actions: "अनुशंसित कार्य",
+        local_mandi_prices: "स्थानीय मंडी भाव",
+        view_market_report: "पूर्ण बाज़ार रिपोर्ट देखें",
+
+        weather_forecast_title: "मौसम पूर्वानुमान",
+        weather_subtitle: "वास्तविक समय मौसम अपडेट और कृषि सलाह।",
+        today: "आज",
+        precipitation: "वर्षा",
+        weather_alert: "मौसम चेतावनी",
+        farm_advisory: "कृषि सलाह",
+        current_conditions: "वर्तमान स्थिति",
+        seven_day_forecast: "7-दिन का पूर्वानुमान",
+        detailed_analytics: "विस्तृत विश्लेषण",
+        hourly_temperature: "प्रति घंटा तापमान",
+
+        // Crop Health
+        crop_health_title: "फसल स्वास्थ्य डॉक्टर",
+        upload_photo: "रोग का पता लगाने के लिए फोटो अपलोड करें।",
+        upload_instruction: "अपलोड करने के लिए क्लिक करें",
+        diagnosis_report: "निदान रिपोर्ट",
+        analyzing: "पत्तियों का विश्लेषण हो रहा है...",
+        confidence_score: "विश्वास स्कोर",
+        recommended_care: "अनुशंसित देखभाल",
+        healthy: "स्वस्थ",
+        disease: "रोग",
+        pest: "कीट",
+        upload_card_title: "फोटो अपलोड करें",
+
+        // Marketplace
+        smart_mandi_live: "स्मार्ट मंडी लाइव",
+        real_time_prices: "भारत भर में वास्तविक समय कृषि जिंस कीमतें।",
+        top_gainer: "शीर्ष लाभ",
+        top_loser: "शीर्ष हानि",
+        high_demand: "उच्च मांग",
+        market_prices: "बाज़ार भाव",
+        commodity: "फसल",
+        state: "राज्य",
+        market_center: "मंडी केंद्र",
+        min_price: "न्यूनतम मूल्य",
+        max_price: "अधिकतम मूल्य",
+        modal_price: "औसत मूल्य",
+        trend: "रुझान",
+        search_market: "बाजार या फसल खोजें...",
+        no_data_found: "कोई डेटा नहीं मिला।",
+
+        // My Plots
+        my_plots_title: "मेरे खेत",
+        manage_plots: "अपने कृषि भूखंडों का प्रबंधन और निगरानी करें।",
+        add_new_plot: "नया खेत जोड़ें",
+        enter_details: "अपने नए भूमि भूखंड का विवरण यहां दर्ज करें।",
+        name: "नाम",
+        crop: "फसल",
+        area: "क्षेत्रफल (एकड़)",
+        save_plot: "खेत सहेजें",
+        no_plots: "कोई खेत नहीं मिला। शुरू करने के लिए अपना पहला खेत जोड़ें!",
+        status: "स्थिति",
+        location: "स्थान",
+        view_map: "मानचित्र पर देखें",
+
+        // Expert Chat
+        kisan_sahayak: "किसान सहायक",
+        ai_expert: "एआई कृषि विशेषज्ञ",
+        ask_ai: "खेती के बारे में एआई से कुछ भी पूछें...",
+        ai_active: "एआई सक्रिय",
+        add_ai_key: "एआई कुंजी जोड़ें",
+
+        // Schemes
+        govt_schemes: "सरकारी योजनाएं",
+        schemes_subtitle: "सब्सिडी, ऋण और बीमा पर वास्तविक समय की जानकारी।",
+        search_schemes: "योजनाएं खोजें...",
+        view_portal: "आधिकारिक पोर्टल देखें",
+        deadline: "समय सीमा",
+        category: "श्रेणी",
+
+        // Profile
+        my_profile: "मेरी प्रोफ़ाइल",
+        manage_info: "अपनी व्यक्तिगत जानकारी और खेत विवरण प्रबंधित करें।",
+        edit_profile: "प्रोफ़ाइल संपादित करें",
+        full_name: "पूरा नाम",
+        email: "ईमेल",
+        farm_name: "खेत का नाम",
+        farming_type: "खेती का प्रकार",
+        save_changes: "परिवर्तन सहेजें",
+        land_size: "कुल भूमि आकार",
+
+        // Settings
+        app_settings: "सेटिंग्स",
+        preferences: "प्राथमिकताएं",
+        appearance: "दिखावट",
+        notifications: "सूचनाएं",
+        privacy: "गोपनीयता और सुरक्षा",
+        sign_out: "लॉग आउट",
+        light: "हल्का",
+        dark: " गहरा",
+        system: "सिस्टम",
+
+        // Auth
+        login_title: "लॉग इन",
+        login_tab: "लॉग इन",
+        signup_tab: "साइन अप",
+        login_welcome: "वापसी पर स्वागत है! कृपया अपने खाते तक पहुंचें।",
+        email_placeholder: "अपना ईमेल दर्ज करें",
+        password_placeholder: "अपना पासवर्ड दर्ज करें",
+        password_create_placeholder: "एक पासवर्ड चुनें",
+        terms_agree: "जारी रखकर, आप हमारी सेवा की शर्तों और गोपनीयता नीति से सहमत हैं।",
+
+        // Common
+        loading: "लोड हो रहा है...",
+        save: "सहेजें",
+        cancel: "रद्द करें",
+        edit: "संपादित करें",
+        delete: "हटाएं",
+        search_placeholder: "खोजें...",
+        view_details: "विवरण देखें",
+        go_home: "मुखपृष्ठ पर जाएं",
+        page_not_found: "पृष्ठ नहीं मिला",
+
+        // Schemes
+        min_agriculture: "कृषि मंत्रालय",
+        clear_filters: "फ़िल्टर साफ़ करें",
+        no_schemes_match: "कोई योजना मेल नहीं खाती",
+        req_docs: "आवश्यक: आधार, भूमि रिकॉर्ड, बैंक पासबुक",
+
+        // Expert Chat
+        ai_connection_fail: "⚠️ AI कनेक्शन विफल। बेसिक मोड पर वापस जा रहे हैं।",
+        type_message: "अपना संदेश टाइप करें...",
+
+        // Plots
+        add_plot_dialog: "नया खेत जोड़ें",
+        save_plot_btn: "खेत सहेजें",
+        plot_saved: "खेत सफलतापूर्वक सहेजा गया!",
+
+        // Profile
+        location_village: "स्थान / गाँव",
+        profile_updated: "प्रोफ़ाइल सफलतापूर्वक अपडेट की गई!"
+    },
+    mr: {
+        app_name: "स्मार्ट किसान",
+        dashboard: "डॅशबोर्ड",
+        weather: "हवामान",
+        crop_health: "पिक आरोग्य",
+        market: "बाजार",
+        my_plots: "माझी शेती",
+        expert_chat: "तज्ज्ञ चर्चा",
+        schemes: "योजना",
+        profile: "प्रोफाइल",
+        settings: "सेटिंग्ज",
+        logout: "बाहेर पडा",
+
+        welcome_back: "स्वागत आहे, शेतकरी दादा!",
+        farm_happening: "आज आपल्या शेतात काय चालू आहे ते पहा.",
+        add_plot: "शेत जोडा",
+        current_weather: "सध्याचे हवामान",
+        humidity: "आर्द्रता",
+        wind: "वारा",
+        farm_overview: "शेतीचा आढावा",
+        active_plots: "सक्रिय शेत",
+        pending_tasks: "प्रलंबित कामे",
+        market_updates: "बाजार सुधारणा",
+        recommended_actions: "शिफारस केलेली कामे",
+        local_mandi_prices: "स्थानिक मंडी भाव",
+        view_market_report: "पूर्ण बाजार अहवाल पहा",
+
+        weather_forecast_title: "हवामान अंदाज",
+        weather_subtitle: "रिअल-टाइम हवामान अपडेट आणि शेती सल्ला.",
+        today: "आज",
+        precipitation: "पाऊस",
+        weather_alert: "हवामान चेतावणी",
+        farm_advisory: "शेती सल्ला",
+        current_conditions: "सध्याची स्थिती",
+        seven_day_forecast: "7-दिवसांचा अंदाज",
+        detailed_analytics: "तपशीलवार विश्लेषण",
+        hourly_temperature: "ताशी तापमान",
+
+        // Crop Health
+        crop_health_title: "पिक आरोग्य डॉक्टर",
+        upload_photo: "रोगाचे निदान करण्यासाठी फोटो अपलोड करा.",
+        upload_instruction: "अपलोड करण्यासाठी क्लिक करा",
+        diagnosis_report: "निदान अहवाल",
+        analyzing: "पानांचे विश्लेषण करत आहे...",
+        confidence_score: "विश्वास गुण",
+        recommended_care: "शिफारस केलेली काळजी",
+        healthy: "निरोगी",
+        disease: "रोग",
+        pest: "कीटक",
+        upload_card_title: "फोटो अपलोड करा",
+
+        // Marketplace
+        smart_mandi_live: "स्मार्ट मंडी लाइव्ह",
+        real_time_prices: "संपूर्ण भारतातील कृषी बाजार भाव.",
+        top_gainer: "सर्वाधिक नफा",
+        top_loser: "सर्वाधिक तोटा",
+        high_demand: "जास्त मागणी",
+        market_prices: "बाजार भाव",
+        commodity: "पिक",
+        state: "राज्य",
+        market_center: "मंडी केंद्र",
+        min_price: "किमान भाव",
+        max_price: "कमाल भाव",
+        modal_price: "सरासरी भाव",
+        trend: "कल",
+        search_market: "बाजार किंवा पिक शोधा...",
+        no_data_found: "कोणतीही माहिती आढळली नाही.",
+
+        // My Plots
+        my_plots_title: "माझी शेती",
+        manage_plots: "आपल्या शेतीचे व्यवस्थापन आणि देखरेख करा.",
+        add_new_plot: "नवीन शेत जोडा",
+        enter_details: "येथे आपल्या नवीन जमिनीची माहिती प्रविष्ट करा.",
+        name: "नाव",
+        crop: "पिक",
+        area: "क्षेत्रफळ (एकर)",
+        save_plot: "जतन करा",
+        no_plots: "कोणतेही शेत आढळले नाही. सुरुवात करण्यासाठी पहिले शेत जोडा!",
+        status: "स्थिती",
+        location: "स्थान",
+        view_map: "नकाशावर पहा",
+
+        // Expert Chat
+        kisan_sahayak: "शेतकरी सहाय्यक",
+        ai_expert: "एआय कृषी तज्ज्ञ",
+        ask_ai: "शेतीबद्दल एआयला काहीही विचारा...",
+        ai_active: "एआय सक्रिय",
+        add_ai_key: "एआय की जोडा",
+
+        // Schemes
+        govt_schemes: "सरकारी योजना",
+        schemes_subtitle: "सबसिडी, कर्ज आणि विमा यावर रिअल-टाइम माहिती.",
+        search_schemes: "योजना शोधा...",
+        view_portal: "अधिकृत पोर्टल पहा",
+        deadline: "मुदत",
+        category: "श्रेणी",
+
+        // Profile
+        my_profile: "माझी प्रोफाइल",
+        manage_info: "आपली वैयक्तिक माहिती आणि शेती तपशील व्यवस्थापित करा.",
+        edit_profile: "प्रोफाइल संपादित करा",
+        full_name: "पूर्ण नाव",
+        email: "ईमेल",
+        farm_name: "शेताचे नाव",
+        farming_type: "शेतीचा प्रकार",
+        save_changes: "बदल जतन करा",
+        land_size: "एकूण जमीन आकार",
+
+        // Settings
+        app_settings: "सेटिंग्ज",
+        preferences: "प्राधान्ये",
+        appearance: "दिसणे",
+        notifications: "सूचना",
+        privacy: "गोपनीयता आणि सुरक्षा",
+        sign_out: "बाहेर पडा",
+        light: "लाईट",
+        dark: "डार्क",
+        system: "सिस्टम",
+
+        // Auth
+        login_title: "लॉग इन",
+        login_tab: "लॉग इन",
+        signup_tab: "साइन अप",
+        login_welcome: "परत स्वागत आहे! कृपया आपल्या खात्यात प्रवेश करा.",
+        email_placeholder: "तुमचा ईमेल प्रविष्ट करा",
+        password_placeholder: "तुमचा पासवर्ड प्रविष्ट करा",
+        password_create_placeholder: "एक पासवर्ड निवडा",
+        terms_agree: "सुरू ठेवून, आपण आमच्या सेवा अटी आणि गोपनीयता धोरणाशी सहमत आहात.",
+
+        // Common
+        loading: "लोड होत आहे...",
+        save: "जतन करा",
+        cancel: "रद्द करा",
+        edit: "संपादित करा",
+        delete: "काढून टाका",
+        search_placeholder: "शोधा...",
+        view_details: "तपशील पहा",
+        go_home: "घरी जा",
+        page_not_found: "पृष्ठ सापडले नाही",
+
+        // Schemes
+        min_agriculture: "कृषी मंत्रालय",
+        clear_filters: "फिल्टर साफ करा",
+        no_schemes_match: "कोणतीही योजना जुळली नाही",
+        req_docs: "आवश्यक: आधार, जमिनीचा रेकॉर्ड, बँक पासबुक",
+
+        // Expert Chat
+        ai_connection_fail: "⚠️ AI कनेक्शन अयशस्वी. बेसिक मोडवर परत जात आहे.",
+        type_message: "तुमचा संदेश टाइप करा...",
+
+        // Plots
+        add_plot_dialog: "नवीन शेत जोडा",
+        save_plot_btn: "शेत जतन करा",
+        plot_saved: "शेत यशस्वीरित्या जतन केले!",
+
+        // Profile
+        location_village: "स्थान / गाव",
+        profile_updated: "प्रोफाइल यशस्वीरित्या अपडेट केली!"
+    },
+    ta: {
+        app_name: "ஸ்மார்ட் கிசான்",
+        dashboard: "தகவல் பலகை",
+        weather: "வானிலை",
+        crop_health: "பயிர் நலம்",
+        market: "சந்தை",
+        my_plots: "என் நிலங்கள்",
+        expert_chat: "நிபுணர் அரட்டை",
+        schemes: "திட்டங்கள்",
+        profile: "சுயவிவரம்",
+        settings: "அமைப்புகள்",
+        logout: "வெளியேறு",
+
+        welcome_back: "நல்வரவு, விவசாயி!",
+        farm_happening: "இன்று உங்கள் பண்ணையில் என்ன நடக்கிறது.",
+        add_plot: "நிலத்தைச் சேர்",
+        current_weather: "தற்போதைய வானிலை",
+        humidity: "ஈரப்பதம்",
+        wind: "காற்று",
+        farm_overview: "பண்ணை கண்ணோட்டம்",
+        active_plots: "செயலில் உள்ள நிலங்கள்",
+        pending_tasks: "நிலுவையில் உள்ள பணிகள்",
+        market_updates: "சந்தை நிலவரம்",
+        recommended_actions: "பரிந்துரைக்கப்பட்ட நடவடிக்கைகள்",
+        local_mandi_prices: "உள்ளூர் சந்தை விலைகள்",
+        view_market_report: "முழு சந்தை அறிக்கையைப் பார்க்கவும்",
+
+        weather_forecast_title: "வானிலை முன்னறிவிப்பு",
+        weather_subtitle: "நிகழ்நேர வானிலை அறிவிப்புகள் மற்றும் விவசாய ஆலோசனைகள்.",
+        today: "இன்று",
+        precipitation: "மழைப்பொழிவு",
+        weather_alert: "வானிலை எச்சரிக்கை",
+        farm_advisory: "பண்ணை ஆலோசனை",
+        current_conditions: "தற்போதைய நிலைமைகள்",
+        seven_day_forecast: "7-நாள் முன்னறிவிப்பு",
+        detailed_analytics: "விரிவான பகுப்பாய்வு",
+        hourly_temperature: "மணிநேர வெப்பநிலை",
+
+        // Crop Health
+        crop_health_title: "பயிர் நல மருத்துவர்",
+        upload_photo: "நோய்களைக் கண்டறிய புகைப்படத்தைப் பதிவேற்றவும்.",
+        upload_instruction: "பதிவேற்ற கிளிக் செய்யவும்",
+        diagnosis_report: "கண்டறிதல் அறிக்கை",
+        analyzing: "ஆய்வு செய்கிறது...",
+        confidence_score: "நம்பிக்கை மதிப்பெண்",
+        recommended_care: "பரிந்துரைக்கப்பட்ட பராமரிப்பு",
+        healthy: "ஆரோக்கியமானது",
+        disease: "நோய்",
+        pest: "பூச்சி",
+        upload_card_title: "புகைப்படத்தைப் பதிவேற்றவும்",
+
+        // Marketplace
+        smart_mandi_live: "ஸ்மார்ட் மண்டி நேரலை",
+        real_time_prices: "இந்திய விவசாயப் பொருட்களின் நிகழ்நேர விலைகள்.",
+        top_gainer: "அதிக லாபம்",
+        top_loser: "அதிக நஷ்டம்",
+        high_demand: "அதிக தேவை",
+        market_prices: "சந்தை விலைகள்",
+        commodity: "பொருள்",
+        state: "மாநிலம்",
+        market_center: "சந்தை மையம்",
+        min_price: "குறைந்தபட்ச விலை",
+        max_price: "அதிகபட்ச விலை",
+        modal_price: "சராசரி விலை",
+        trend: "போக்கு",
+        search_market: "சந்தையைத் தேடு...",
+        no_data_found: "தரவு எதுவும் இல்லை.",
+
+        // My Plots
+        my_plots_title: "என் நிலங்கள்",
+        manage_plots: "உங்கள் விவசாய நிலங்களை நிர்வகிக்கவும்.",
+        add_new_plot: "புதிய நிலத்தைச் சேர்",
+        enter_details: "உங்கள் புதிய நிலத்தின் விவரங்களை உள்ளிடவும்.",
+        name: "பெயர்",
+        crop: "பயிர்",
+        area: "பரப்பளவு (ஏக்கர்)",
+        save_plot: "சேமி",
+        no_plots: "நிலங்கள் இல்லை. தொடங்க ஒன்றைச் சேர்க்கவும்!",
+        status: "நிலை",
+        location: "இடம்",
+        view_map: "வரைபடத்தில் பார்",
+
+        // Expert Chat
+        kisan_sahayak: "விவசாய உதவியாளர்",
+        ai_expert: "AI விவசாய நிபுணர்",
+        ask_ai: "விவசாயம் பற்றி AI இடம் கேளுங்கள்...",
+        ai_active: "AI செயலில் உள்ளது",
+        add_ai_key: "AI திறவுகோலைச் சேர்",
+
+        // Schemes
+        govt_schemes: "அரசு திட்டங்கள்",
+        schemes_subtitle: "மானியம், கடன் மற்றும் காப்பீடு பற்றிய தகவல்கள்.",
+        search_schemes: "திட்டங்களைத் தேடு...",
+        view_portal: "அதிகாரப்பூர்வ தளம்",
+        deadline: "கடைசி தேதி",
+        category: "வகை",
+
+        // Profile
+        my_profile: "என் சுயவிவரம்",
+        manage_info: "உங்கள் தனிப்பட்ட மற்றும் பண்ணை விவரங்களை நிர்வகிக்கவும்.",
+        edit_profile: "சுயவிவரத்தைத் திருத்து",
+        full_name: "முழு பெயர்",
+        email: "மின்னஞ்சல்",
+        farm_name: "பண்ணை பெயர்",
+        farming_type: "விவசாய வகை",
+        save_changes: "மாற்றங்களைச் சேமி",
+        land_size: "மொத்த நில அளவு",
+
+        // Settings
+        app_settings: "அமைப்புகள்",
+        preferences: "விருப்பங்கள்",
+        appearance: "தோற்றம்",
+        notifications: "அறிவிப்புகள்",
+        privacy: "தனியுரிமை & பாதுகாப்பு",
+        sign_out: "வெளியேறு",
+        light: "வெளிச்சம்",
+        dark: "இருள்",
+        system: "அமைப்பு",
+
+        // Auth
+        login_title: "உள்நுழை",
+        login_tab: "உள்நுழை",
+        signup_tab: "பதிவு செய்க",
+        login_welcome: "மீண்டும் வருக! தயவுசெய்து உங்கள் கணக்கை அணுகவும்.",
+        email_placeholder: "உங்கள் மின்னஞ்சலை உள்ளிடவும்",
+        password_placeholder: "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
+        password_create_placeholder: "ஒரு கடவுச்சொல்லைத் தேர்வுசெய்க",
+        terms_agree: "தொடர்வதன் மூலம், எங்கள் சேவை விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கையை ஏற்கிறீர்கள்.",
+
+        // Common
+        loading: "ஏற்றுகிறது...",
+        save: "சேமி",
+        cancel: "ரத்துசெய்",
+        edit: "திருத்து",
+        delete: "நீக்கு",
+        search_placeholder: "தேடு...",
+        view_details: "விவரங்களைப் பார்",
+        go_home: "முகப்புக்குச் செல்",
+        page_not_found: "பக்கம் கிடைக்கவில்லை",
+
+        // Schemes
+        min_agriculture: "வேளாண் அமைச்சகம்",
+        clear_filters: "வடிப்பான்களை அழி",
+        no_schemes_match: "திட்டங்கள் எதுவும் பொருந்தவில்லை",
+        req_docs: "தேவை: ஆதார், நில ஆவணம், வங்கி கணக்கு புத்தகம்",
+
+        // Expert Chat
+        ai_connection_fail: "⚠️ AI இணைப்பு தோல்வியடைந்தது. அடிப்படை முறைக்கு மாறுகிறது.",
+        type_message: "உங்கள் செய்தியைத் தட்டச்சு செய்யவும்...",
+
+        // Plots
+        add_plot_dialog: "புதிய நிலத்தைச் சேர்",
+        save_plot_btn: "நிலத்தைச் சேமி",
+        plot_saved: "நிலம் வெற்றிகரமாக சேமிக்கப்பட்டது!",
+
+        // Profile
+        location_village: "இடம் / கிராமம்",
+        profile_updated: "சுயவிவரம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது!"
+    },
+    gu: {
+        app_name: "સ્માર્ટ કિસાન",
+        dashboard: "ડેશબોર્ડ",
+        weather: "હવામાન",
+        crop_health: "પાક આરોગ્ય",
+        market: "બજાર",
+        my_plots: "મારા ખેતર",
+        expert_chat: "નિષ્ણાત ચેટ",
+        schemes: "યોજનાઓ",
+        profile: "પ્રોફાઇલ",
+        settings: "સેટિંગ્સ",
+        logout: "લૉગ આઉટ",
+
+        welcome_back: "સ્વાગત છે, ખેડૂત મિત્ર!",
+        farm_happening: "આજે તમારા ખેતરમાં શું થઈ રહ્યું છે.",
+        add_plot: "ખેતર ઉમેરો",
+        current_weather: "વર્તમાન હવામાન",
+        humidity: "ભેજ",
+        wind: "પવન",
+        farm_overview: "ખેતી સારાંશ",
+        active_plots: "સક્રિય ખેતર",
+        pending_tasks: "બાકી કામો",
+        market_updates: "બજાર અપડેટ્સ",
+        recommended_actions: "ભલામણ કરેલ કાર્યો",
+        local_mandi_prices: "સ્થાનિક બજાર ભાવ",
+        view_market_report: "સંપૂર્ણ બજાર અહેવાલ જુઓ",
+
+        weather_forecast_title: "હવામાન આગાહી",
+        weather_subtitle: "રીઅલ-ટાઇમ હવામાન અપડેટ્સ અને કૃષિ સલાહ.",
+        today: "આજે",
+        precipitation: "વરસાદ",
+        weather_alert: "હવામાન ચેતવણી",
+        farm_advisory: "કૃષિ સલાહ",
+        current_conditions: "વર્તમાન સ્થિતિ",
+        seven_day_forecast: "7-દિવસની આગાહી",
+        detailed_analytics: "વિગતવાર વિશ્લેષણ",
+        hourly_temperature: "કલાકદીઠ તાપમાન",
+
+        // Crop Health
+        crop_health_title: "પાક આરોગ્ય ડોક્ટર",
+        upload_photo: "રોગ શોધવા માટે ફોટો અપલોડ કરો.",
+        upload_instruction: "અપલોડ કરવા માટે ક્લિક કરો",
+        diagnosis_report: "નિદાન રિપોર્ટ",
+        analyzing: " પાંદડાનું વિશ્લેષણ થઈ રહ્યું છે...",
+        confidence_score: "વિશ્વાસ સ્કોર",
+        recommended_care: "ભલામણ કરેલ સારવાર",
+        healthy: "તંદુરસ્ત",
+        disease: "રોગ",
+        pest: "જીવાત",
+        upload_card_title: "ફોટો અપલોડ કરો",
+
+        // Marketplace
+        smart_mandi_live: "સ્માર્ટ માર્કેટ લાઈવ",
+        real_time_prices: "ભારતભરમાં રીઅલ-ટાઇમ કૃષિ ભાવ.",
+        top_gainer: "સૌથી વધુ નફો",
+        top_loser: "સૌથી વધુ નુકસાન",
+        high_demand: "વધુ માંગ",
+        market_prices: "બજાર ભાવ",
+        commodity: "પાક",
+        state: "રાજ્ય",
+        market_center: "માર્કેટ સેન્ટર",
+        min_price: "લઘુત્તમ ભાવ",
+        max_price: "મહત્તમ ભાવ",
+        modal_price: "સરેરાશ ભાવ",
+        trend: "વલણ",
+        search_market: "બજાર અથવા પાક શોધો...",
+        no_data_found: "કોઈ ડેટા મળ્યો નથી.",
+
+        // My Plots
+        my_plots_title: "મારા ખેતર",
+        manage_plots: "તમારા ખેતરોનું સંચાલન કરો.",
+        add_new_plot: "નવું ખેતર ઉમેરો",
+        enter_details: "તમારા નવા ખેતરની વિગતો દાખલ કરો.",
+        name: "નામ",
+        crop: "પાક",
+        area: "વિસ્તાર (એકર)",
+        save_plot: "સાચવો",
+        no_plots: "કોઈ ખેતર મળ્યું નથી. શરૂ કરવા માટે ઉમેરો!",
+        status: "સ્થિતિ",
+        location: "સ્થળ",
+        view_map: "નકશા પર જુઓ",
+
+        // Expert Chat
+        kisan_sahayak: "કિસાન સહાયક",
+        ai_expert: "AI કૃષિ નિષ્ણાત",
+        ask_ai: "ખેતી વિશે AI ને પૂછો...",
+        ai_active: "AI સક્રિય",
+        add_ai_key: "AI કી ઉમેરો",
+
+        // Schemes
+        govt_schemes: "સરકારી યોજનાઓ",
+        schemes_subtitle: "સબસિડી, લોન અને વીમા વિશે માહિતી.",
+        search_schemes: "યોજનાઓ શોધો...",
+        view_portal: "સત્તાવાર પોર્ટલ જુઓ",
+        deadline: "સમયમર્યાદા",
+        category: "શ્રેણી",
+
+        // Profile
+        my_profile: "મારી પ્રોફાઇલ",
+        manage_info: "તમારી વ્યક્તિગત અને ખેતરની વિગતો.",
+        edit_profile: "પ્રોફાઇલ સંપાદિત કરો",
+        full_name: "પૂરું નામ",
+        email: "ઇમેઇલ",
+        farm_name: "ખેતરનું નામ",
+        farming_type: "ખેતીનો પ્રકાર",
+        save_changes: "ફેરફારો સાચવો",
+        land_size: "કુલ જમીન",
+
+        // Settings
+        app_settings: "સેટિંગ્સ",
+        preferences: "પસંદગીઓ",
+        appearance: " દેખાવ",
+        notifications: "સૂચનાઓ",
+        privacy: "ગોપનીયતા અને સુરક્ષા",
+        sign_out: "લૉગ આઉટ",
+        light: "લાઇટ",
+        dark: "ડાર્ક",
+        system: "સિસ્ટમ",
+
+        // Auth
+        login_title: "લૉગ ઇન",
+        login_tab: "લૉગ ઇન",
+        signup_tab: "સાઇન અપ",
+        login_welcome: "પાછા સ્વાગત છે! કૃપા કરીને તમારા ખાતામાં પ્રવેશ કરો.",
+        email_placeholder: "તમારું ઇમેઇલ દાખલ કરો",
+        password_placeholder: "તમારો પાસવર્ડ દાખલ કરો",
+        password_create_placeholder: "એક પાસવર્ડ પસંદ કરો",
+        terms_agree: "ચાલુ રાખીને, તમે અમારી સેવા શરતો અને ગોપનીયતા નીતિ સાથે સંમત થાઓ છો.",
+
+        // Common
+        loading: "લોડ થઈ રહ્યું છે...",
+        save: "સાચવો",
+        cancel: "રદ કરો",
+        edit: "ફેરફાર કરો",
+        delete: "કાઢી નાખો",
+        search_placeholder: "શોધો...",
+        view_details: "વિગતો જુઓ",
+        go_home: "હોમ પર જાઓ",
+        page_not_found: "પેજ મળ્યું નથી",
+
+        // Schemes
+        min_agriculture: "કૃષિ મંત્રાલય",
+        clear_filters: "ફિલ્ટર્સ સાફ કરો",
+        no_schemes_match: "કોઈ યોજના મળી નથી",
+        req_docs: "જરૂરી: આધાર, જમીન રેકોર્ડ, બેંક પાસબુક",
+
+        // Expert Chat
+        ai_connection_fail: "⚠️ AI કનેક્શન નિષ્ફળ. બેઝિક મોડ પર પાછા જઈ રહ્યા છીએ.",
+        type_message: "તમારો સંદેશ લખો...",
+
+        // Plots
+        add_plot_dialog: "નવું ખેતર ઉમેરો",
+        save_plot_btn: "ખેતર સાચવો",
+        plot_saved: "ખેતર સફળતાપૂર્વક સાચવવામાં આવ્યું!",
+
+        // Profile
+        location_village: "સ્થળ / ગામ",
+        profile_updated: "પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ!"
+    }
+};
+
+export const LANGUAGES = [
+    { code: 'en', name: 'English', native: 'English' },
+    { code: 'hi', name: 'Hindi', native: 'हिन्दी' },
+    { code: 'mr', name: 'Marathi', native: 'मराठी' },
+    { code: 'ta', name: 'Tamil', native: 'தமிழ்' },
+    { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી' }
+];
