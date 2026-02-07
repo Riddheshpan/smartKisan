@@ -11,8 +11,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const Auth = () => {
     const { t } = useLanguage();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('ronak05mishra@gmail.com');
+    const [password, setPassword] = useState('123456');
     const [loading, setLoading] = useState(false);
     const { signIn, signUp } = useAuth();
     const navigate = useNavigate();
