@@ -24,6 +24,8 @@ export const ProtectedRoute = ({ children, requireCompleteProfile = true }) => {
         }
     }, [user]);
 
+    console.log("ProtectedRoute: State", { user: user?.email, loading, profileLoading, path: location.pathname });
+
     if (loading || profileLoading) {
         return <div className="flex h-screen items-center justify-center">
             <Loader2 className="w-8 h-8 animate-spin text-green-600" />
@@ -31,6 +33,7 @@ export const ProtectedRoute = ({ children, requireCompleteProfile = true }) => {
     }
 
     if (!user) {
+        console.log("ProtectedRoute: No User, Redirecting to Auth");
         return <Navigate to="/auth" state={{ from: location }} replace />;
     }
 

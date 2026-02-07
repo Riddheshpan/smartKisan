@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         // Check active session
         supabase.auth.getSession().then(({ data: { session } }) => {
+            console.log("AuthContext: Initial Session Check", session);
             setSession(session);
             setUser(session?.user ?? null);
             setLoading(false);
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
 
         // Listen for changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            console.log("AuthContext: Auth Change", _event, session);
             setSession(session);
             setUser(session?.user ?? null);
             setLoading(false);
@@ -40,12 +42,41 @@ export const AuthProvider = ({ children }) => {
         return supabase.auth.signOut();
     };
 
+    const signInWithGoogle = async () => {
+        console.log("AuthContext: signInWithGoogle called");
+        try {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin,
+                    skipBrowserRedirect: true
+                }
+            });
+            console.log("AuthContext: signInWithOAuth result", { data, error });
+
+            if (data?.url) {
+                alert("Redirecting to: " + data.url);
+                window.location.href = data.url;
+            } else if (error) {
+                alert("Supabase Error: " + error.message);
+            } else {
+                alert("No URL returned. Check Console.");
+            }
+
+            return { data, error };
+        } catch (err) {
+            console.error("AuthContext: signInWithOAuth exception", err);
+            return { error: err };
+        }
+    };
+
     const value = {
         session,
         user,
         loading,
         signUp,
         signIn,
+        signInWithGoogle,
         signOut,
     };
 
