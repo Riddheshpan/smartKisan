@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, Filter, Search, MapPin, DollarSign, Calendar, Leaf } from 'lucide-react';
+import { TrendingUp, TrendingDown, Filter, Search, MapPin, DollarSign, Calendar, Leaf, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,32 +25,37 @@ const Market = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedState, setSelectedState] = useState("All");
     const [selectedCommodity, setSelectedCommodity] = useState("All");
-    const [filteredData, setFilteredData] = useState(MOCK_MARKET_DATA);
+    const [marketData, setMarketData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // Derived lists for filters
-    const states = ["All", ...new Set(MOCK_MARKET_DATA.map(item => item.state))];
-    const commodities = ["All", ...new Set(MOCK_MARKET_DATA.map(item => item.commodity))];
+    // Filter lists - derived from backend data ideally, but can keep static for now or derive from full set
+    const states = ["All", "Punjab", "Haryana", "Maharashtra", "Uttar Pradesh", "Madhya Pradesh", "Rajasthan", "Gujarat", "Karnataka", "Tamil Nadu"];
+    const commodities = ["All", "Wheat", "Rice", "Potato", "Onion", "Tomato", "Soybean", "Mustard", "Cotton", "Maize"];
 
     useEffect(() => {
-        let data = MOCK_MARKET_DATA;
+        const fetchMarket = async () => {
+            setLoading(true);
+            try {
+                const params = new URLSearchParams();
+                if (selectedState !== 'All') params.append('state', selectedState);
+                if (selectedCommodity !== 'All') params.append('commodity', selectedCommodity);
+                if (searchTerm) params.append('search', searchTerm);
 
-        if (selectedState !== "All") {
-            data = data.filter(item => item.state === selectedState);
-        }
+                const res = await fetch(`/api/market?${params.toString()}`);
+                const data = await res.json();
+                setMarketData(data.data || []);
+            } catch (e) {
+                console.error('Market fetch error:', e);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        if (selectedCommodity !== "All") {
-            data = data.filter(item => item.commodity === selectedCommodity);
-        }
-
-        if (searchTerm) {
-            data = data.filter(item =>
-                item.market.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.commodity.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        setFilteredData(data);
+        const timer = setTimeout(fetchMarket, 300); // Debounce search
+        return () => clearTimeout(timer);
     }, [selectedState, selectedCommodity, searchTerm]);
+
+    const filteredData = marketData; // Already filtered by server
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
@@ -161,8 +166,17 @@ const Market = () => {
                                         <th className="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Trend</th>
                                     </tr>
                                 </thead>
-                                <tbody className="[&_tr:last-child]:border-0">
-                                    {filteredData.length > 0 ? filteredData.map((item) => (
+                                <tbody className="[&_tr:last-child]:border-0 relative">
+                                    {loading ? (
+                                        <tr>
+                                            <td colSpan={7} className="p-12 text-center text-muted-foreground">
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                                                    <p>Fetching latest mandi prices...</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ) : filteredData.length > 0 ? filteredData.map((item) => (
                                         <tr key={item.id} className="border-b transition-colors hover:bg-muted/50">
                                             <td className="p-4 align-middle font-medium">{item.commodity}</td>
                                             <td className="p-4 align-middle">{item.state}</td>

@@ -3,7 +3,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const router = express.Router();
 
 const getGenAI = () => {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : null;
     if (!apiKey) throw new Error('GEMINI_API_KEY not configured');
     return new GoogleGenerativeAI(apiKey);
 };
@@ -12,7 +12,7 @@ const getGenAI = () => {
 router.post('/chat', async (req, res) => {
     try {
         const { message } = req.body;
-        const model = getGenAI().getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
 
         const result = await model.generateContent(
             `You are an agricultural expert for Indian farmers. Keep answers short and practical. Answer in same language as question.\nQuestion: ${message}`
@@ -27,7 +27,7 @@ router.post('/chat', async (req, res) => {
 // POST /api/ai/crop-health
 router.post('/crop-health', async (req, res) => {
     try {
-        const model = getGenAI().getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
         const base64Image = req.body.toString('base64');
         const mimeType = req.headers['content-type'] || 'image/jpeg';
 
@@ -46,7 +46,6 @@ router.post('/crop-health', async (req, res) => {
         ]);
 
         const text = result.response.text();
-        // Parse JSON from response (handle markdown code blocks)
         const jsonMatch = text.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
             const analysis = JSON.parse(jsonMatch[0]);

@@ -39,6 +39,11 @@ export const translations = {
         seven_day_forecast: "7-Day Forecast",
         detailed_analytics: "Detailed Analytics",
         hourly_temperature: "Hourly Temperature",
+        weather_alert_description: "High temperature expected in the next 48 hours. Please ensure adequate irrigation for your crops.",
+        farming_advisory: "Farming Advisory",
+        advisory_irrigation: "Apply irrigation to wheat crops during evening hours to minimize water loss.",
+        advisory_harvest: "Postpone harvesting for 2 days due to predicted light showers.",
+        advisory_pest: "Check for aphids in mustard crops; apply Neem oil if infestation is observed.",
 
         // Crop Health
         crop_health_title: "Crop Health Doctor",
@@ -198,6 +203,11 @@ export const translations = {
         seven_day_forecast: "7-दिन का पूर्वानुमान",
         detailed_analytics: "विस्तृत विश्लेषण",
         hourly_temperature: "प्रति घंटा तापमान",
+        weather_alert_description: "अगले 48 घंटों में उच्च तापमान की उम्मीद है। कृपया अपनी फसलों के लिए पर्याप्त सिंचाई सुनिश्चित करें।",
+        farming_advisory: "कृषि सलाह",
+        advisory_irrigation: "पानी के नुकसान को कम करने के लिए शाम के समय गेहूं की फसलों की सिंचाई करें।",
+        advisory_harvest: "हल्की बारिश के पूर्वानुमान के कारण कटाई को 2 दिनों के लिए स्थगित करें।",
+        advisory_pest: "सरसों की फसलों में एफिड्स की जाँच करें; यदि संक्रमण देखा जाए तो नीम के तेल का प्रयोग करें।",
 
         // Crop Health
         crop_health_title: "फसल स्वास्थ्य डॉक्टर",
@@ -357,6 +367,11 @@ export const translations = {
         seven_day_forecast: "7-दिवसांचा अंदाज",
         detailed_analytics: "तपशीलवार विश्लेषण",
         hourly_temperature: "ताशी तापमान",
+        weather_alert_description: "पुढील ४८ तासांत उच्च तापमानाची अपेक्षा आहे. कृपया आपल्या पिकांसाठी पुरेशी सिंचन व्यवस्था सुनिश्चित करा.",
+        farming_advisory: "शेती सल्ला",
+        advisory_irrigation: "पाण्याचे नुकसान कमी करण्यासाठी संध्याकाळच्या वेळी गव्हाच्या पिकांना पाणी द्या.",
+        advisory_harvest: "हलक्या पावसाच्या अंदाजामुळे कापणी २ दिवस पुढे ढकला.",
+        advisory_pest: "मोहरीच्या पिकात मावा तपासा; प्रादुर्भाव आढळल्यास कडुनिंबाच्या तेलाची फवारणी करा.",
 
         // Crop Health
         crop_health_title: "पिक आरोग्य डॉक्टर",
@@ -516,6 +531,11 @@ export const translations = {
         seven_day_forecast: "7-நாள் முன்னறிவிப்பு",
         detailed_analytics: "விரிவான பகுப்பாய்வு",
         hourly_temperature: "மணிநேர வெப்பநிலை",
+        weather_alert_description: "அடுத்த 48 மணிநேரத்தில் அதிக வெப்பநிலை எதிர்பார்க்கப்படுகிறது. உங்கள் பயிர்களுக்கு போதுமான நீர்ப்பாசனத்தை உறுதி செய்யவும்.",
+        farming_advisory: "பண்ணை ஆலோசனை",
+        advisory_irrigation: "நீர் இழப்பைக் குறைக்க மாலை நேரங்களில் கோதுமைப் பயிர்களுக்கு நீர்ப்பாசனம் செய்யவும்.",
+        advisory_harvest: "மிதமான மழை முன்னறிவிப்பு காரணமாக அறுவடையை 2 நாட்களுக்கு ஒத்திவைக்கவும்.",
+        advisory_pest: "கடுகுப் பயிர்களில் அசுவினிகளைச் சரிபார்க்கவும்; பாதிப்பு காணப்பட்டால் வேப்ப எண்ணெய் தெளிக்கவும்.",
 
         // Crop Health
         crop_health_title: "பயிர் நல மருத்துவர்",
@@ -675,6 +695,11 @@ export const translations = {
         seven_day_forecast: "7-દિવસની આગાહી",
         detailed_analytics: "વિગતવાર વિશ્લેષણ",
         hourly_temperature: "કલાકદીઠ તાપમાન",
+        weather_alert_description: "આગામી 48 કલાકમાં ઊંચા તાપમાનની ધારણા છે. કૃપા કરીને તમારા પાક માટે પૂરતી સિંચાઈની ખાતરી કરો.",
+        farming_advisory: "કૃષિ સલાહ",
+        advisory_irrigation: "પાણીનો બગાડ ઘટાડવા માટે સાંજના સમયે ઘઉંના પાકને પિયત આપો.",
+        advisory_harvest: "હળવા વરસાદની આગાહીને કારણે લણણી 2 દિવસ માટે મુલતવી રાખો.",
+        advisory_pest: "રાઈના પાકમાં મોલો-મસીની તપાસ કરો; જો ઉપદ્રવ જણાય તો લીમડાના તેલનો છંટકાવ કરો.",
 
         // Crop Health
         crop_health_title: "પાક આરોગ્ય ડોક્ટર",

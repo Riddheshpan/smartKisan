@@ -1,5 +1,5 @@
-import React from 'react';
-import { CloudSun, Sprout, TrendingUp, Plus, Droplets, Wind, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CloudSun, Sprout, TrendingUp, Plus, Droplets, Wind, ArrowUpRight, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,39 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const Dashboard = () => {
     const { t } = useLanguage();
+    const [weather, setWeather] = useState(null);
+    const [market, setMarket] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                // Fetch Weather (default New Delhi or user loc)
+                const weatherRes = await fetch('/api/weather');
+                const weatherData = await weatherRes.json();
+                setWeather(weatherData);
+
+                // Fetch Market Data
+                const marketRes = await fetch('/api/market?limit=4');
+                const marketData = await marketRes.json();
+                setMarket(marketData);
+            } catch (e) {
+                console.error('Dashboard fetch error:', e);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <div className="flex h-[80vh] items-center justify-center"><Loader2 className="w-10 h-10 animate-spin text-green-600" /></div>;
+    }
+
+    const currentWeather = weather?.current || { temp: '--', desc: 'Loading...', humidity: '--', wind: '--' };
+    const marketItems = market?.data?.slice(0, 4) || [];
+    const wheatPrice = market?.data?.find(i => i.commodity === 'Wheat')?.modal_price || '2275';
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-8">
@@ -43,17 +76,17 @@ const Dashboard = () => {
                     <CardContent>
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-4xl font-bold">28°C</p>
-                                <p className="text-blue-100">Partly Cloudy</p>
+                                <p className="text-4xl font-bold">{currentWeather.temp}°C</p>
+                                <p className="text-blue-100">{currentWeather.desc}</p>
                             </div>
                             <CloudSun className="h-16 w-16 text-blue-200 opacity-80" />
                         </div>
                         <div className="mt-6 flex justify-between text-sm text-blue-100">
                             <div className="flex items-center gap-1">
-                                <Droplets className="h-4 w-4" /> 65% {t('humidity')}
+                                <Droplets className="h-4 w-4" /> {currentWeather.humidity}% {t('humidity')}
                             </div>
                             <div className="flex items-center gap-1">
-                                <Wind className="h-4 w-4" /> 12 km/h {t('wind')}
+                                <Wind className="h-4 w-4" /> {currentWeather.wind} km/h {t('wind')}
                             </div>
                         </div>
                     </CardContent>
@@ -90,7 +123,7 @@ const Dashboard = () => {
                                     <ArrowUpRight className="h-4 w-4 text-purple-600" />
                                 </div>
                                 <p className="text-2xl font-bold text-gray-900">Wheat ↑</p>
-                                <p className="text-xs text-gray-500 mt-1">₹2,100 / Quintal</p>
+                                <p className="text-xs text-gray-500 mt-1">₹{wheatPrice} / Quintal</p>
                             </div>
                         </div>
                     </CardContent>

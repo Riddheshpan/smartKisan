@@ -24,7 +24,7 @@ app.use('/api/market', marketRoutes);
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // SPA Fallback - serve index.html for all non-API routes
-app.get('/{*splat}', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 

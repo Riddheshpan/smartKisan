@@ -1,5 +1,7 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
+import { api } from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 // Placeholder ProtectedRoute - For now, it allows everything.
 // In real implementation, check Supabase session.
@@ -7,13 +9,35 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export const ProtectedRoute = ({ children, requireCompleteProfile = true }) => {
     const { user, loading } = useAuth();
+    const [profile, setProfile] = React.useState(null);
+    const [profileLoading, setProfileLoading] = React.useState(true);
+    const location = useLocation();
 
-    if (loading) {
-        return <div className="flex h-screen items-center justify-center">Loading...</div>;
+    React.useEffect(() => {
+        if (user) {
+            api.getProfile(user.id).then(({ data }) => {
+                setProfile(data);
+                setProfileLoading(false);
+            });
+        } else {
+            setProfileLoading(false);
+        }
+    }, [user]);
+
+    if (loading || profileLoading) {
+        return <div className="flex h-screen items-center justify-center">
+            <Loader2 className="w-8 h-8 animate-spin text-green-600" />
+        </div>;
     }
 
     if (!user) {
-        return <Navigate to="/auth" replace />;
+        return <Navigate to="/auth" state={{ from: location }} replace />;
+    }
+
+    // If profile is incomplete and we're not on onboarding, redirect there
+    const isIncomplete = !profile?.full_name || !profile?.location;
+    if (requireCompleteProfile && isIncomplete && location.pathname !== '/onboarding') {
+        return <Navigate to="/onboarding" replace />;
     }
 
     return children;

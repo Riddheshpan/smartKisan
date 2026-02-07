@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, Sparkles, Loader2 } from 'lucide-react';
+import { Send, Bot, Sparkles, Loader2, Mic, MicOff, Volume2 } from 'lucide-react';
 import { Card, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -9,17 +9,64 @@ import { getSmartAnswer } from '@/lib/smart_answers';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const ExpertChat = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const [messages, setMessages] = useState([
         { id: 1, text: "Namaste! I am Kisan Sahayak. How can I assist you today?", sender: "bot", timestamp: new Date() }
     ]);
     const [inputText, setInputText] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [isListening, setIsListening] = useState(false);
     const scrollRef = useRef(null);
+    const recognitionRef = useRef(null);
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages, isTyping]);
+
+    // Initialize Speech Recognition
+    useEffect(() => {
+        if (typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognitionRef.current = new SpeechRecognition();
+            recognitionRef.current.continuous = false;
+            recognitionRef.current.interimResults = false;
+            recognitionRef.current.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+
+            recognitionRef.current.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                setInputText(transcript);
+                setIsListening(false);
+            };
+
+            recognitionRef.current.onerror = () => {
+                setIsListening(false);
+            };
+
+            recognitionRef.current.onend = () => {
+                setIsListening(false);
+            };
+        }
+    }, [language]);
+
+    const toggleListening = () => {
+        if (isListening) {
+            recognitionRef.current?.stop();
+            setIsListening(false);
+        } else {
+            recognitionRef.current?.start();
+            setIsListening(true);
+        }
+    };
+
+    const speak = (text) => {
+        if (typeof window !== 'undefined' && window.speechSynthesis) {
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language === 'hi' ? 'hi-IN' : 'en-IN';
+            window.speechSynthesis.speak(utterance);
+        }
+    };
 
     const callAI = async (text) => {
         try {
@@ -37,7 +84,7 @@ const ExpertChat = () => {
     };
 
     const handleSend = async (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         if (!inputText.trim()) return;
 
         const userMsg = { id: Date.now(), text: inputText, sender: "user", timestamp: new Date() };
@@ -48,6 +95,9 @@ const ExpertChat = () => {
         const reply = await callAI(userMsg.text);
         setMessages(prev => [...prev, { id: Date.now() + 1, text: reply, sender: "bot", timestamp: new Date() }]);
         setIsTyping(false);
+
+        // Auto-speak the AI response
+        speak(reply);
     };
 
     return (
@@ -60,7 +110,7 @@ const ExpertChat = () => {
                     </h1>
                     <p className="text-sm text-muted-foreground">{t('ai_expert')}</p>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                <div className="flex items-center gap-2 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full text-nowrap">
                     <Sparkles className="w-3 h-3" /> AI Powered
                 </div>
             </div>
@@ -71,12 +121,21 @@ const ExpertChat = () => {
                         {messages.map((msg) => (
                             <div key={msg.id} className={cn("flex w-max max-w-[80%]", msg.sender === "user" ? "ml-auto" : "mr-auto")}>
                                 <div className={cn(
-                                    "p-3 rounded-2xl text-sm shadow-sm",
+                                    "p-3 rounded-2xl text-sm shadow-sm relative group",
                                     msg.sender === "user"
                                         ? "bg-green-600 text-white rounded-br-none"
                                         : "bg-white dark:bg-secondary border rounded-bl-none"
                                 )}>
-                                    <p className="whitespace-pre-wrap">{msg.text}</p>
+                                    <p className="whitespace-pre-wrap pr-6">{msg.text}</p>
+                                    {msg.sender === 'bot' && (
+                                        <button
+                                            onClick={() => speak(msg.text)}
+                                            className="absolute top-2 right-2 text-muted-foreground hover:text-primary transition-colors"
+                                            title="Read out loud"
+                                        >
+                                            <Volume2 className="w-4 h-4" />
+                                        </button>
+                                    )}
                                     <p className={cn("text-[10px] mt-1 text-right opacity-70", msg.sender === "user" ? "text-green-100" : "text-muted-foreground")}>
                                         {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </p>
@@ -97,15 +156,28 @@ const ExpertChat = () => {
                 </ScrollArea>
 
                 <CardFooter className="p-3 bg-background border-t">
-                    <form onSubmit={handleSend} className="flex gap-2 w-full">
+                    <form onSubmit={handleSend} className="flex gap-2 w-full items-center">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className={cn(
+                                "shrink-0 transition-all",
+                                isListening ? "bg-red-50 text-red-600 border-red-200 animate-pulse" : "hover:text-green-600 hover:bg-green-50"
+                            )}
+                            onClick={toggleListening}
+                            disabled={isTyping}
+                        >
+                            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                        </Button>
                         <Input
-                            placeholder={t('ask_ai') || "Ask me anything about farming..."}
+                            placeholder={isListening ? "Listening..." : (t('ask_ai') || "Ask me anything...")}
                             className="flex-1"
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
                             disabled={isTyping}
                         />
-                        <Button type="submit" size="icon" className="bg-green-600 hover:bg-green-700" disabled={!inputText.trim() || isTyping}>
+                        <Button type="submit" size="icon" className="bg-green-600 hover:bg-green-700 shrink-0" disabled={!inputText.trim() || isTyping}>
                             {isTyping ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                         </Button>
                     </form>

@@ -27,13 +27,17 @@ const CropHealth = () => {
 
             const data = await res.json();
 
-            if (!res.ok || !data.success) {
+            if (!res.ok) {
+                throw new Error(data.details || data.error || 'Analysis failed');
+            }
+
+            if (!data.success) {
                 throw new Error(data.error || 'Analysis failed');
             }
 
             setResult(data);
         } catch (e) {
-            setError(e.message || 'Failed to analyze image');
+            setError(e.message);
         } finally {
             setIsAnalyzing(false);
         }
