@@ -28,6 +28,7 @@ create table if not exists public.plots (
   name text not null,
   crop text not null,
   area numeric,
+  location text,
   status text default 'Preparation'
 );
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, MapPin, Sprout, Ruler, Loader2 } from 'lucide-react';
+import { Plus, MapPin, Sprout, Ruler, Loader2, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,7 +26,8 @@ const Plots = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [saving, setSaving] = useState(false);
 
-    const [newPlot, setNewPlot] = useState({ name: "", crop: "", area: "" });
+    const [newPlot, setNewPlot] = useState({ name: "", crop: "", area: "", location: "" });
+    const [editingPlot, setEditingPlot] = useState(null);
 
     useEffect(() => {
         if (user) {
@@ -43,7 +44,24 @@ const Plots = () => {
         setLoading(false);
     };
 
-    const handleAddPlot = async (e) => {
+    const handleAddClick = () => {
+        setEditingPlot(null);
+        setNewPlot({ name: "", crop: "", area: "", location: "" });
+        setIsDialogOpen(true);
+    };
+
+    const handleEditClick = (plot) => {
+        setEditingPlot(plot);
+        setNewPlot({
+            name: plot.name,
+            crop: plot.crop,
+            area: plot.area,
+            location: plot.location || ""
+        });
+        setIsDialogOpen(true);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!newPlot.name || !newPlot.crop || !newPlot.area) return;
 
@@ -53,20 +71,48 @@ const Plots = () => {
             name: newPlot.name,
             crop: newPlot.crop,
             area: parseFloat(newPlot.area),
-            status: 'Preparation', // Default status
+            location: newPlot.location,
+            status: editingPlot ? editingPlot.status : 'Preparation',
         };
 
-        const { data, error } = await api.createPlot(plotData);
+        let result;
+        if (editingPlot) {
+            result = await api.updatePlot(editingPlot.id, plotData);
+        } else {
+            result = await api.createPlot(plotData);
+        }
+
+        const { data, error } = result;
 
         if (error) {
-            alert('Failed to add plot: ' + error.message);
+            alert('Failed to save plot: ' + error.message);
         } else {
-            // Optimistic update or reload
             loadPlots();
-            setNewPlot({ name: "", crop: "", area: "" });
+            setEditingPlot(null);
+            setNewPlot({ name: "", crop: "", area: "", location: "" });
             setIsDialogOpen(false);
         }
         setSaving(false);
+    };
+
+    const handleViewOnMap = (location) => {
+        if (!location) {
+            alert("Location not set for this plot.");
+            return;
+        }
+        const query = encodeURIComponent(location);
+        window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+    };
+
+    const handleDelete = async (plotId) => {
+        if (window.confirm(t('delete_confirmation') || 'Are you sure you want to delete this plot?')) {
+            const { error } = await api.deletePlot(plotId);
+            if (error) {
+                alert('Error deleting plot: ' + error.message);
+            } else {
+                loadPlots();
+            }
+        }
     };
 
     if (loading && plots.length === 0) {
@@ -83,18 +129,18 @@ const Plots = () => {
 
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
-                        <Button className="bg-green-600 hover:bg-green-700">
+                        <Button className="bg-green-600 hover:bg-green-700" onClick={handleAddClick}>
                             <Plus className="mr-2 h-4 w-4" /> {t('add_new_plot')}
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>{t('add_plot_dialog')}</DialogTitle>
+                            <DialogTitle>{editingPlot ? 'Edit Plot' : t('add_plot_dialog')}</DialogTitle>
                             <DialogDescription>
                                 {t('enter_details')}
                             </DialogDescription>
                         </DialogHeader>
-                        <form onSubmit={handleAddPlot} className="grid gap-4 py-4">
+                        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="name" className="text-right">
                                     {t('name')}
@@ -136,10 +182,22 @@ const Plots = () => {
                                     required
                                 />
                             </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="location" className="text-right">
+                                    Location
+                                </Label>
+                                <Input
+                                    id="location"
+                                    value={newPlot.location}
+                                    onChange={(e) => setNewPlot({ ...newPlot, location: e.target.value })}
+                                    className="col-span-3"
+                                    placeholder="e.g. Coordinates or Address"
+                                />
+                            </div>
                             <DialogFooter>
                                 <Button type="submit" disabled={saving}>
                                     {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    {t('save_plot_btn')}
+                                    {editingPlot ? 'Update Plot' : t('save_plot_btn')}
                                 </Button>
                             </DialogFooter>
                         </form>
@@ -155,17 +213,9 @@ const Plots = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {plots.map((plot) => (
-                        <Card key={plot.id} className="hover:shadow-md transition-shadow">
+                        <Card key={plot.id} className="hover:shadow-md transition-shadow relative">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-lg font-bold">{plot.name}</CardTitle>
-                                <span className={cn(
-                                    "px-2 py-1 rounded-full text-xs font-medium",
-                                    plot.status === "Active" ? "bg-green-100 text-green-700" :
-                                        plot.status === "Harvest Ready" ? "bg-yellow-100 text-yellow-700" :
-                                            "bg-gray-100 text-gray-700"
-                                )}>
-                                    {plot.status}
-                                </span>
                             </CardHeader>
                             <CardContent>
                                 <div className="space-y-3 mt-4">
@@ -177,16 +227,27 @@ const Plots = () => {
                                         <Ruler className="mr-2 h-4 w-4 text-blue-600" />
                                         Area: <span className="font-medium text-gray-900 ml-1">{plot.area} Acres</span>
                                     </div>
-                                    {/* Placeholder for location or other details */}
                                     <div className="flex items-center text-sm text-gray-500">
                                         <MapPin className="mr-2 h-4 w-4 text-red-500" />
-                                        Location: <span className="text-gray-400 ml-1">View on Map</span>
+                                        Location: <span className="text-gray-600 ml-1">{plot.location || 'Not set'}</span>
                                     </div>
                                 </div>
 
-                                <div className="mt-6 flex gap-2">
-                                    <Button variant="outline" size="sm" className="w-full">Edit</Button>
-                                    <Button variant="outline" size="sm" className="w-full">Details</Button>
+                                <div className="mt-6 flex flex-col gap-2">
+                                    <div className="flex gap-2">
+                                        <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEditClick(plot)}>Edit</Button>
+                                        <Button variant="destructive" size="sm" className="flex-none px-3" onClick={() => handleDelete(plot.id)}>
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="w-full text-blue-600 border-blue-200 hover:bg-blue-50"
+                                        onClick={() => handleViewOnMap(plot.location || plot.name)}
+                                    >
+                                        <MapPin className="w-3 h-3 mr-1" /> View on Map
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>

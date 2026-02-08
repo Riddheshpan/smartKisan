@@ -81,6 +81,9 @@ const Weather = () => {
                                 <div className="flex items-center justify-center md:justify-start gap-2 mt-4 text-sm font-medium bg-white/20 w-fit px-3 py-1 rounded-full mx-auto md:mx-0">
                                     <MapPin className="w-4 h-4" />
                                     <span>{locationName}</span>
+                                    {locationName === 'New Delhi' && user && (
+                                        <span className="text-xs ml-1 opacity-70">(Default)</span>
+                                    )}
                                 </div>
                             </div>
                             <CurrentIcon className="w-40 h-40 text-yellow-300 drop-shadow-lg" />
