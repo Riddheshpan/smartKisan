@@ -193,7 +193,7 @@ const Schemes = () => {
                 style={{ background: 'linear-gradient(135deg, #5D4037, #795548)' }}
                 id="impact-banner"
             >
-                <div className="grid grid-cols-3 gap-4 w-full sm:w-auto flex-shrink-0">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full sm:w-auto flex-shrink-0">
                     {[
                         { num: '2.5L+', label: 'Farmers Helped' },
                         { num: '28%', label: 'Yield Increase' },

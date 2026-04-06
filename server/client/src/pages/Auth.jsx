@@ -149,8 +149,8 @@ const Auth = () => {
                     </div>
 
                     {/* Language Switcher */}
-                    <div className="flex justify-center mb-6">
-                        <div className="flex bg-white border-2 border-gray-200 rounded-2xl p-1.5 gap-1">
+                    <div className="flex justify-center mb-6 w-full">
+                        <div className="flex flex-wrap justify-center bg-white border-2 border-gray-200 rounded-2xl p-1.5 gap-1">
                             {LANGUAGES.map((lang) => (
                                 <button
                                     key={lang.code}

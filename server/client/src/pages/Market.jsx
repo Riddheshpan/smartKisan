@@ -138,7 +138,7 @@ const Market = () => {
             </div>
 
             {/* ── Summary Cards ─────────────────────────────────────────── */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
                 <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-4">
                     <div className="flex items-center gap-1.5 text-green-600 text-xs font-semibold mb-2">
                         <TrendingUp className="w-3.5 h-3.5" /> Top Gainer

@@ -218,7 +218,7 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-bold text-gray-900">What do you need today?</h2>
                 </div>
-                <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
                     {FEATURES.map((feature) => {
                         const Icon = feature.icon;
                         return (
@@ -387,7 +387,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Impact Numbers */}
-                <div className="mt-6 grid grid-cols-3 gap-3">
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {[
                         { num: '2.5L+', label: 'Farmers Served', icon: '👨‍🌾' },
                         { num: '28%', label: 'Avg Yield Increase', icon: '📈' },

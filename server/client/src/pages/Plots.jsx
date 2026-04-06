@@ -141,8 +141,8 @@ const Plots = () => {
                             </DialogDescription>
                         </DialogHeader>
                         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="name" className="text-right">
+                            <div className="flex flex-col sm:grid sm:grid-cols-4 sm:items-center gap-2 sm:gap-4">
+                                <Label htmlFor="name" className="text-left sm:text-right">
                                     {t('name')}
                                 </Label>
                                 <Input
@@ -154,8 +154,8 @@ const Plots = () => {
                                     required
                                 />
                             </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="crop" className="text-right">
+                            <div className="flex flex-col sm:grid sm:grid-cols-4 sm:items-center gap-2 sm:gap-4">
+                                <Label htmlFor="crop" className="text-left sm:text-right">
                                     {t('crop')}
                                 </Label>
                                 <Input
@@ -167,8 +167,8 @@ const Plots = () => {
                                     required
                                 />
                             </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="area" className="text-right">
+                            <div className="flex flex-col sm:grid sm:grid-cols-4 sm:items-center gap-2 sm:gap-4">
+                                <Label htmlFor="area" className="text-left sm:text-right">
                                     {t('area')}
                                 </Label>
                                 <Input
@@ -182,8 +182,8 @@ const Plots = () => {
                                     required
                                 />
                             </div>
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="location" className="text-right">
+                            <div className="flex flex-col sm:grid sm:grid-cols-4 sm:items-center gap-2 sm:gap-4">
+                                <Label htmlFor="location" className="text-left sm:text-right">
                                     Location
                                 </Label>
                                 <Input
